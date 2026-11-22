@@ -11,7 +11,7 @@ struct Chunk {
 	void Deallocate(void* ptr, std::size_t blockSize);
 	void Release();
 
-	unsigned char* m_PtrData; // the raw memory block	
+	unsigned char* m_PtrData = nullptr; // the raw memory block	
 	unsigned char m_FirstAvailableBlock; 
 	unsigned char m_BlocksAvailableCount; 
 
