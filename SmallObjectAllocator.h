@@ -4,6 +4,7 @@
 #pragma once
 
 #include <vector>
+#include <mutex>
 
 #include "FixedAllocator.h"
 
@@ -43,5 +44,7 @@ class SmallObjectAllocator
     
     // default max object size
     std::size_t m_MaxObjectSize = 64; 
+
+	std::mutex m_mutex;
     
 };

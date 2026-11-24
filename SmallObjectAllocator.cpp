@@ -3,7 +3,6 @@
 #include <memory>
 #include <algorithm>
 
-
 SmallObjectAllocator::SmallObjectAllocator(size_t chunkSize, size_t maxObjectSize)
 	: m_PtrLastAlloc(nullptr), 
 	  m_PtrLastDealloc(nullptr), 
@@ -15,6 +14,8 @@ SmallObjectAllocator::SmallObjectAllocator(size_t chunkSize, size_t maxObjectSiz
 
 void* SmallObjectAllocator::Allocate(size_t numBytes)
 {
+	std::lock_guard<std::mutex> lock(m_mutex);
+
 	// fallback
 	if (numBytes > m_MaxObjectSize)
 	{
@@ -48,6 +49,7 @@ void* SmallObjectAllocator::Allocate(size_t numBytes)
 
 void SmallObjectAllocator::Deallocate(void* ptr, size_t size)
 {
+	std::lock_guard<std::mutex> lock(m_mutex);
 
 	// fallback
 	if (size > m_MaxObjectSize)
